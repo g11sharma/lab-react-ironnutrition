@@ -14,14 +14,15 @@ function App() {
   const foodData = [...foodlist];
 
   const [foods, setFoods] = useState(foodData);
+  const [search, setSearch] = useState('');
 
   function addFood(newfood) {
     const copy = [...foods];
     copy.push(newfood);
     setFoods(newfood);
   }
-  function deleteFood(food) {
-    setFoods(foods.filter((x) => x !== food));
+  function deleteFood(name) {
+    setFoods(foods.filter((food) => food.name !== name));
     console.log(deleteFood);
   }
 
@@ -30,22 +31,26 @@ function App() {
     setFoods([...foods, newFood]);
   };
 
-  function searchFood() {
-    const foodSearch = foodData.filter((food) => food.name.match(query));
-    setFoods(foodSearch);
-  }
+  const searchFood = foods.filter((food) => {
+    return food.name.toLowerCase().includes(search.toLowerCase());
+  });
+  //function searchFood() {
+  //const foodSearch = foodData.filter((food) => food.name.match(query));
+  //setFoods(foodSearch);
+  //}
 
   return (
     <div>
       <AddFoodForm addNewFood={addNewFood} />
-      <SearchForm searchFood={searchFood} />
+      <SearchForm search={search} setSearch={setSearch} />
       <h2>Food List</h2>
-      <Row style={{ width: '100%', justifyContent: 'center' }}></Row>
-      <div>
-        {foods.map((foods) => (
+
+      <Divider>Food List</Divider>
+      <Row style={{ width: '100%', justifyContent: 'center' }}>
+        {searchFood.map((foods) => (
           <FoodBox {...foods} deleteFood={deleteFood} />
         ))}
-      </div>
+      </Row>
     </div>
   );
 }

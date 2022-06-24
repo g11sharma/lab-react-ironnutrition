@@ -1,26 +1,19 @@
 import { Divider, Input } from 'antd';
-import React from 'react';
-import { useState } from 'react';
 
-function Search({ searchFood }) {
-  const [searchTerm, setSearchTerm] = React.useState('');
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    searchFood(event.target.value);
-  };
+// Iteration 5
+function SearchForm({ search, setSearch }) {
   return (
     <>
       <Divider>Search</Divider>
 
       <label>Search</label>
       <Input
-        value={searchTerm}
+        value={search}
         type="text"
-        placeholder="Enter search query"
-        onChange={handleSearch}
+        onChange={(e) => setSearch(e.target.value)}
       />
     </>
   );
 }
 
-export default Search;
+export default SearchForm;
